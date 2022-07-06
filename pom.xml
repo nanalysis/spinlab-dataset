@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.nanalysis</groupId>
-    <artifactId>rs2d-dataset</artifactId>
+    <artifactId>spinlab-dataset</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
