@@ -16,6 +16,7 @@
 package com.nanalysis.spinlab.dataset.util;
 
 import com.nanalysis.spinlab.dataset.DataFormatException;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -90,7 +91,26 @@ public class DOM {
         }
     }
 
-    public static String getAttribute(Node node, String attributeName) {
+    public static Element addElement(Element parent, String tag) {
+        return addElement(parent, tag, null);
+    }
+
+    public static Element addElement(Element parent, String tag, String text) {
+        Element element = parent.getOwnerDocument().createElement(tag);
+        parent.appendChild(element);
+
+        if (text != null) {
+            element.setTextContent(text);
+
+        }
+        return element;
+    }
+
+    public static Element addElement(Element parent, String tag, boolean value) {
+        return addElement(parent, tag, String.valueOf(value));
+    }
+
+        public static String getAttribute(Node node, String attributeName) {
         return node.getAttributes().getNamedItem(attributeName).getTextContent();
     }
 

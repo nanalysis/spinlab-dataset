@@ -16,6 +16,7 @@
 package com.nanalysis.spinlab.dataset.values;
 
 import com.nanalysis.spinlab.dataset.util.DOM;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class Value<T> {
@@ -125,5 +126,19 @@ public class Value<T> {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public void toDOM(Element parent) {
+        DOM.addElement(parent, "name", name);
+        DOM.addElement(parent, "displayedName", displayedName);
+        DOM.addElement(parent, "description", description);
+        DOM.addElement(parent, "uuid", uuid);
+        DOM.addElement(parent, "name", name);
+        DOM.addElement(parent, "locked", locked);
+        DOM.addElement(parent, "lockedToDefault", lockedToDefault);
+        DOM.addElement(parent, "group", group);
+        DOM.addElement(parent, "category", category);
+
+        // value and defaultValue must be done in subclasses for typing
     }
 }
