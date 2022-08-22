@@ -33,6 +33,7 @@ public class ListNumberValue extends NumericValue<List<Number>> {
     public ListNumberValue(Node node) {
         super(node);
         this.value = DOM.getListNumberContent(node, "value", getNumberClass());
+        this.defaultValue = DOM.getListNumberContent(node, "defaultValue", getNumberClass());
         this.order = DOM.getEnumContent(node, "order", Order.class, Order.Unknown);
     }
 

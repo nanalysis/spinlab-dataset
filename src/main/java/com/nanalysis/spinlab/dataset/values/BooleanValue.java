@@ -28,5 +28,6 @@ public class BooleanValue extends Value<Boolean> {
     public BooleanValue(Node node) {
         super(node);
         this.value = DOM.getBooleanContent(node, "value");
+        this.defaultValue = DOM.getBooleanContent(node, "defaultValue");
     }
 }

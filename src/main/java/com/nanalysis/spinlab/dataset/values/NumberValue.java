@@ -20,8 +20,21 @@ import com.nanalysis.spinlab.dataset.enums.Unit;
 import com.nanalysis.spinlab.dataset.util.DOM;
 import org.w3c.dom.Node;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NumberValue extends NumericValue<Number> {
     public static final String XSI_TYPE = "numberParam";
+
+    /**
+     * An optional list of suggested values. Before acquisition, this is displayed as a combo-box to the user.
+     */
+    private List<Number> suggestedValues = new ArrayList<>();
+
+    /**
+     * Whether to force the value as one of the suggested ones, or to let the user type a free-form value.
+     */
+    private boolean restrictedToSuggested;
 
     public NumberValue() {
         // empty
@@ -30,6 +43,9 @@ public class NumberValue extends NumericValue<Number> {
     public NumberValue(Node node) {
         super(node);
         this.value = DOM.getNumberContent(node, "value", getNumberClass());
+        this.defaultValue = DOM.getNumberContent(node, "defaultValue", getNumberClass());
+        this.suggestedValues = DOM.getListNumberContent(node, "suggestedValues", getNumberClass());
+        this.restrictedToSuggested = DOM.getBooleanContent(node, "restrictedToSuggested");
     }
 
     public double getValueAsHertz(Header header) {

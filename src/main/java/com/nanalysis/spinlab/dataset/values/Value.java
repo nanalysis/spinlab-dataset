@@ -35,6 +35,11 @@ public class Value<T> {
     protected T value;
 
     /**
+     * The parameter default value.
+     */
+    protected T defaultValue;
+
+    /**
      * The parameter description.
      */
     protected String description;
@@ -45,6 +50,26 @@ public class Value<T> {
      */
     protected String uuid;
 
+    /**
+     * Whether the parameter was user-editable before the acquisition.
+     */
+    protected boolean locked;
+
+    /**
+     * Whether the parameter was locked to its default value (mostly for instrument-dependent parameters).
+     */
+    protected boolean lockedToDefault;
+
+    /**
+     * The parameter group - used for display only.
+     */
+    protected String group;
+
+    /**
+     * The parameter category - used for display only.
+     */
+    protected String category;
+
     public Value() {
         // empty
     }
@@ -54,6 +79,10 @@ public class Value<T> {
         this.displayedName = DOM.getTextContent(node, "displayedName");
         this.description = DOM.getTextContent(node, "description");
         this.uuid = DOM.getTextContent(node, "uuid");
+        this.locked = DOM.getBooleanContent(node, "locked");
+        this.lockedToDefault = DOM.getBooleanContent(node, "lockedToDefault");
+        this.group = DOM.getTextContent(node, "group");
+        this.category = DOM.getTextContent(node, "category");
 
         // value and defaultValue must be done in subclasses for typing
     }
