@@ -16,10 +16,24 @@
 package com.nanalysis.spinlab.dataset.values;
 
 import com.nanalysis.spinlab.dataset.util.DOM;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TextValue extends Value<String> {
     public static final String XSI_TYPE = "textParam";
+
+    /**
+     * An optional list of suggested values. Before acquisition, this is displayed as a combo-box to the user.
+     */
+    private List<String> suggestedValues = new ArrayList<>();
+
+    /**
+     * Whether to force the value as one of the suggested ones, or to let the user type a free-form value.
+     */
+    private boolean restrictedToSuggested;
 
     public TextValue() {
         // empty
@@ -28,5 +42,18 @@ public class TextValue extends Value<String> {
     public TextValue(Node node) {
         super(node);
         this.value = DOM.getTextContent(node, "value");
+        this.defaultValue = DOM.getTextContent(node, "defaultValue");
+        this.suggestedValues = DOM.getListTextContent(node, "suggestedValues");
+        this.restrictedToSuggested = DOM.getBooleanContent(node, "restrictedToSuggested");
+    }
+
+    @Override
+    public void toDOM(Element parent) {
+        super.toDOM(parent);
+        parent.setAttribute("xsi:type", XSI_TYPE);
+        DOM.addElement(parent, "value", value);
+        DOM.addElement(parent, "defaultValue", defaultValue);
+        DOM.addTextElements(parent, "suggestedValues", suggestedValues);
+        DOM.addElement(parent, "restrictedToSuggested", restrictedToSuggested);
     }
 }

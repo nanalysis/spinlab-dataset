@@ -18,9 +18,20 @@ package com.nanalysis.spinlab.dataset.values;
 
 import com.nanalysis.spinlab.dataset.enums.NumberType;
 import com.nanalysis.spinlab.dataset.util.DOM;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public abstract class NumericValue<T> extends Value<T> {
+    /**
+     * The maximum value that could be set before acquisition.
+     */
+    protected Number maxValue;
+
+    /**
+     * The minimum value that could be set by the user before acquisition.
+     */
+    protected Number minValue;
+
     /**
      * The number enumeration.
      */
@@ -33,7 +44,17 @@ public abstract class NumericValue<T> extends Value<T> {
     public NumericValue(Node node) {
         super(node);
         this.numberType = DOM.getEnumContent(node, "numberEnum", NumberType.class, NumberType.Double);
+        this.minValue = DOM.getNumberContent(node, "minValue", getNumberClass());
+        this.maxValue = DOM.getNumberContent(node, "maxValue", getNumberClass());
         // value and defaultValue must be done in subclasses for typing
+    }
+
+    @Override
+    public void toDOM(Element parent) {
+        super.toDOM(parent);
+        DOM.addElement(parent, "numberEnum", numberType);
+        DOM.addElement(parent, "minValue", minValue);
+        DOM.addElement(parent, "maxValue", maxValue);
     }
 
     protected Class<? extends Number> getNumberClass() {

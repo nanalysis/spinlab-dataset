@@ -16,6 +16,7 @@
 package com.nanalysis.spinlab.dataset.values;
 
 import com.nanalysis.spinlab.dataset.util.DOM;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class BooleanValue extends Value<Boolean> {
@@ -28,5 +29,14 @@ public class BooleanValue extends Value<Boolean> {
     public BooleanValue(Node node) {
         super(node);
         this.value = DOM.getBooleanContent(node, "value");
+        this.defaultValue = DOM.getBooleanContent(node, "defaultValue");
+    }
+
+    @Override
+    public void toDOM(Element parent) {
+        super.toDOM(parent);
+        parent.setAttribute("xsi:type", XSI_TYPE);
+        DOM.addElement(parent, "value", value);
+        DOM.addElement(parent, "defaultValue", defaultValue);
     }
 }

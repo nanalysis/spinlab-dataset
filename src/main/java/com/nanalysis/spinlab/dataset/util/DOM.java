@@ -16,6 +16,7 @@
 package com.nanalysis.spinlab.dataset.util;
 
 import com.nanalysis.spinlab.dataset.DataFormatException;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -24,6 +25,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class DOM {
+    public static final String XMLNS_URI = "http://www.w3.org/2000/xmlns/";
+    public static final String XMLSCHEMA_INSTANCE_URI = "http://www.w3.org/2001/XMLSchema-instance";
+
     public static List<Node> findChildNodes(Node parent, String tag) {
         List<Node> result = new ArrayList<>();
 
@@ -94,6 +98,42 @@ public class DOM {
         return node.getAttributes().getNamedItem(attributeName).getTextContent();
     }
 
+    public static Element addElement(Element parent, String tag) {
+        return addElement(parent, tag, (String) null);
+    }
+
+    public static Element addElement(Element parent, String tag, String text) {
+        Element element = parent.getOwnerDocument().createElement(tag);
+        parent.appendChild(element);
+
+        if (text != null) {
+            element.setTextContent(text);
+
+        }
+        return element;
+    }
+
+    public static Element addElement(Element parent, String tag, boolean value) {
+        return addElement(parent, tag, String.valueOf(value));
+    }
+
+    public static Element addElement(Element parent, String tag, Enum<?> value) {
+        String text = value != null ? value.name() : null;
+        return addElement(parent, tag, text);
+    }
+
+    public static void addElement(Element parent, String tag, Number number) {
+        String text = number != null ? number.toString() : null;
+        addElement(parent, tag, text);
+    }
+
+    public static void addTextElements(Element parent, String tag, List<String> texts) {
+        texts.forEach(text -> addElement(parent, tag, text));
+    }
+
+    public static void addNumberElements(Element parent, String tag, List<Number> numbers) {
+        numbers.forEach(n -> addElement(parent, tag, n));
+    }
 
     private static Number parseNumber(String value, Class<? extends Number> numberClass) {
         // try to parse integers specifically for better precision

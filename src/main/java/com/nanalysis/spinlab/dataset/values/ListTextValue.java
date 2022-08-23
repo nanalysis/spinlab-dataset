@@ -16,12 +16,24 @@
 package com.nanalysis.spinlab.dataset.values;
 
 import com.nanalysis.spinlab.dataset.util.DOM;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListTextValue extends Value<List<String>> {
     public static final String XSI_TYPE = "listTextParam";
+
+    /**
+     * An optional list of suggested values. Before acquisition, this is displayed as a combo-box to the user.
+     */
+    private List<String> suggestedValues = new ArrayList<>();
+
+    /**
+     * Whether to force the value as one of the suggested ones, or to let the user type a free-form value.
+     */
+    private boolean restrictedToSuggested;
 
     public ListTextValue() {
         // empty
@@ -30,5 +42,18 @@ public class ListTextValue extends Value<List<String>> {
     public ListTextValue(Node node) {
         super(node);
         this.value = DOM.getListTextContent(node, "value");
+        this.defaultValue = DOM.getListTextContent(node, "defaultValue");
+        this.suggestedValues = DOM.getListTextContent(node, "suggestedValues");
+        this.restrictedToSuggested = DOM.getBooleanContent(node, "restrictedToSuggested");
+    }
+
+    @Override
+    public void toDOM(Element parent) {
+        super.toDOM(parent);
+        parent.setAttribute("xsi:type", XSI_TYPE);
+        DOM.addTextElements(parent, "value", value);
+        DOM.addTextElements(parent, "defaultValue", defaultValue);
+        DOM.addTextElements(parent, "suggestedValues", suggestedValues);
+        DOM.addElement(parent, "restrictedToSuggested", restrictedToSuggested);
     }
 }

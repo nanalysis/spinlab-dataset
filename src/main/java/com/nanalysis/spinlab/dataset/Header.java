@@ -19,9 +19,7 @@ import com.nanalysis.spinlab.dataset.enums.Parameter;
 import com.nanalysis.spinlab.dataset.values.ListNumberValue;
 import com.nanalysis.spinlab.dataset.values.Value;
 
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Header {
     private final Map<String, Value<?>> values = new TreeMap<>(String::compareTo);
@@ -54,6 +52,10 @@ public class Header {
             case 4 -> this.variation4D;
             default -> throw new IllegalArgumentException("Invalid dimension: " + dim + ", must be between 1 and 4.");
         };
+    }
+
+    public Collection<Value<?>> all() {
+        return Collections.unmodifiableCollection(values.values());
     }
 
     public <T extends Value<?>> T get(Parameter parameter) {

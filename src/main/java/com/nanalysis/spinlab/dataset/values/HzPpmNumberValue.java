@@ -20,6 +20,7 @@ import com.nanalysis.spinlab.dataset.enums.NumberType;
 import com.nanalysis.spinlab.dataset.enums.Unit;
 import com.nanalysis.spinlab.dataset.util.DOM;
 import com.nanalysis.spinlab.dataset.util.UnitConversions;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class HzPpmNumberValue extends NumberValue {
@@ -43,6 +44,14 @@ public class HzPpmNumberValue extends NumberValue {
         super(node);
         this.uuidBaseFrequency = DOM.getTextContent(node, "uuidBaseFrequency");
         this.initialNumberType = DOM.getEnumContent(node, "initialNumberEnum", NumberType.class, NumberType.Double);
+    }
+
+    @Override
+    public void toDOM(Element parent) {
+        super.toDOM(parent);
+        parent.setAttribute("xsi:type", XSI_TYPE);
+        DOM.addElement(parent, "uuidBaseFrequency", uuidBaseFrequency);
+        DOM.addElement(parent, "initialNumberType", initialNumberType);
     }
 
     @Override
