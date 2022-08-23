@@ -39,6 +39,10 @@ public class ListTextValue extends Value<List<String>> {
         // empty
     }
 
+    public ListTextValue(String name, List<String> value) {
+        super(name, value);
+    }
+
     public ListTextValue(Node node) {
         super(node);
         this.value = DOM.getListTextContent(node, "value");
@@ -55,5 +59,15 @@ public class ListTextValue extends Value<List<String>> {
         DOM.addTextElements(parent, "defaultValue", defaultValue);
         DOM.addTextElements(parent, "suggestedValues", suggestedValues);
         DOM.addElement(parent, "restrictedToSuggested", restrictedToSuggested);
+    }
+
+    @Override
+    public String stringValue() {
+        return String.join(";", value);
+    }
+
+    @Override
+    public List<String> stringListValue() {
+        return value;
     }
 }

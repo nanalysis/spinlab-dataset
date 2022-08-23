@@ -41,6 +41,10 @@ public class NumberValue extends NumericValue<Number> {
         // empty
     }
 
+    public NumberValue(String name, Number value) {
+        super(name, value);
+    }
+
     public NumberValue(Node node) {
         super(node);
         this.value = DOM.getNumberContent(node, "value", getNumberClass());
@@ -66,5 +70,15 @@ public class NumberValue extends NumericValue<Number> {
         }
 
         throw new IllegalStateException("Trying read a Hertz value from unit type " + unit);
+    }
+
+    @Override
+    public int intValue() {
+        return value.intValue();
+    }
+
+    @Override
+    public double doubleValue() {
+        return value.doubleValue();
     }
 }

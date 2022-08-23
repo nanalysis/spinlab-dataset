@@ -21,6 +21,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ListNumberValue extends NumericValue<List<Number>> {
     public static final String XSI_TYPE = "listNumberParam";
@@ -29,6 +30,10 @@ public class ListNumberValue extends NumericValue<List<Number>> {
 
     public ListNumberValue() {
         // empty
+    }
+
+    public ListNumberValue(String name, List<Number> value) {
+        super(name, value);
     }
 
     public ListNumberValue(Node node) {
@@ -45,6 +50,39 @@ public class ListNumberValue extends NumericValue<List<Number>> {
         DOM.addNumberElements(parent, "value", value);
         DOM.addNumberElements(parent, "defaultValue", defaultValue);
         DOM.addElement(parent, "order", order);
+    }
+
+    @Override
+    public int intValue() {
+        if (value.size() != 1) {
+            throw new UnsupportedOperationException("Not a single numeric value: " + getName());
+        }
+
+        return value.get(0).intValue();
+    }
+
+    @Override
+    public double doubleValue() {
+        if (value.size() != 1) {
+            throw new UnsupportedOperationException("Not a single numeric value: " + getName());
+        }
+
+        return value.get(0).doubleValue();
+    }
+
+    @Override
+    public List<Integer> intListValue() {
+        return value.stream().map(Number::intValue).toList();
+    }
+
+    @Override
+    public List<Double> doubleListValue() {
+        return value.stream().map(Number::doubleValue).toList();
+    }
+
+    @Override
+    public String stringValue() {
+        return value.stream().map(String::valueOf).collect(Collectors.joining(";"));
     }
 
     public Order getOrder() {

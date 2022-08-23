@@ -19,6 +19,8 @@ import com.nanalysis.spinlab.dataset.util.DOM;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.util.List;
+
 public class Value<T> {
     /**
      * Name of this parameter.
@@ -75,6 +77,13 @@ public class Value<T> {
         // empty
     }
 
+    public Value(String name, T value) {
+        this.name = name;
+        this.displayedName = name;
+        this.value = value;
+        this.defaultValue = value;
+    }
+
     public Value(Node node) {
         this.name = DOM.getTextContent(node, "name");
         this.displayedName = DOM.getTextContent(node, "displayedName");
@@ -100,6 +109,38 @@ public class Value<T> {
 
         // value and defaultValue must be done in subclasses for typing
     }
+
+    // easy accessors - may not make sense for all hierarchy but simplifies calling code
+
+    public String stringValue() {
+        return value == null ? null : String.valueOf(value);
+    }
+
+    public List<String> stringListValue() {
+        return List.of(stringValue());
+    }
+
+    public int intValue() {
+        throw new UnsupportedOperationException("Not a numeric value: " + getName());
+    }
+
+    public List<Integer> intListValue() {
+        return List.of(intValue());
+    }
+
+    public double doubleValue() {
+        throw new UnsupportedOperationException("Not a numeric value: " + getName());
+    }
+
+    public List<Double> doubleListValue() {
+        return List.of(doubleValue());
+    }
+
+    public boolean booleanValue() {
+        throw new UnsupportedOperationException("Not a boolean value: " + getName());
+    }
+
+    // generated getters and setters
 
     public String getName() {
         return name;

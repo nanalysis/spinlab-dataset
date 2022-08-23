@@ -28,19 +28,19 @@ public class Header {
     private final Map<String, ListNumberValue> variation3D = new TreeMap<>(String::compareTo);
     private final Map<String, ListNumberValue> variation4D = new TreeMap<>(String::compareTo);
 
-    public void add(Value<?> value) {
+    public void put(Value<?> value) {
         this.values.put(value.getName(), value);
     }
 
-    public void addVariation(Value<?> value, int dim) {
+    public void putVariation(Value<?> value, int dim) {
         if (value instanceof ListNumberValue listNumberValue) {
-            addVariation(listNumberValue, dim);
+            putVariation(listNumberValue, dim);
         } else {
             throw new IllegalArgumentException("Only ListNumberValue can be stored as variations");
         }
     }
 
-    public void addVariation(ListNumberValue value, int dim) {
+    public void putVariation(ListNumberValue value, int dim) {
         getVariationMapForDimension(dim).put(value.getName(), value);
     }
 
@@ -56,6 +56,22 @@ public class Header {
 
     public Collection<Value<?>> all() {
         return Collections.unmodifiableCollection(values.values());
+    }
+
+    public boolean contains(Parameter parameter) {
+        return this.contains(parameter.name());
+    }
+
+    public boolean contains(String name) {
+        return this.values.containsKey(name);
+    }
+
+    public <T extends Value<?>> Optional<T> optional(Parameter parameter) {
+        return optional(parameter.name());
+    }
+
+    public <T extends Value<?>> Optional<T> optional(String name) {
+        return Optional.ofNullable(get(name));
     }
 
     public <T extends Value<?>> T get(Parameter parameter) {

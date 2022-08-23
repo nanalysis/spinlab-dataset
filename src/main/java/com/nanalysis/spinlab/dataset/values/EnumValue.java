@@ -26,6 +26,10 @@ public class EnumValue extends Value<String> {
         // empty
     }
 
+    public EnumValue(String name, String value) {
+        super(name, value);
+    }
+
     public EnumValue(Node node) {
         super(node);
         this.value = DOM.getTextContent(node, "value");

@@ -41,6 +41,10 @@ public abstract class NumericValue<T> extends Value<T> {
         // empty
     }
 
+    public NumericValue(String name, T value) {
+        super(name, value);
+    }
+
     public NumericValue(Node node) {
         super(node);
         this.numberType = DOM.getEnumContent(node, "numberEnum", NumberType.class, NumberType.Double);

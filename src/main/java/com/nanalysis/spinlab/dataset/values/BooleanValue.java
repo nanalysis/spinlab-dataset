@@ -26,6 +26,10 @@ public class BooleanValue extends Value<Boolean> {
         // empty
     }
 
+    public BooleanValue(String name, boolean value) {
+        super(name, value);
+    }
+
     public BooleanValue(Node node) {
         super(node);
         this.value = DOM.getBooleanContent(node, "value");
@@ -38,5 +42,10 @@ public class BooleanValue extends Value<Boolean> {
         parent.setAttribute("xsi:type", XSI_TYPE);
         DOM.addElement(parent, "value", value);
         DOM.addElement(parent, "defaultValue", defaultValue);
+    }
+
+    @Override
+    public boolean booleanValue() {
+        return Boolean.TRUE.equals(value);
     }
 }
