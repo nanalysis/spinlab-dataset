@@ -34,6 +34,10 @@ import java.io.OutputStream;
 import java.util.Collection;
 
 public class HeaderWriter {
+    public void writeXml(Header header, OutputStream output) throws ParserConfigurationException, TransformerException {
+        writeXml(toDom(header), output);
+    }
+
     public Document toDom(Header header) throws ParserConfigurationException {
 
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();

@@ -40,6 +40,12 @@ public class HzPpmNumberValue extends NumberValue {
         // empty
     }
 
+    public HzPpmNumberValue(String name, Number value, String uuidBaseFrequency, NumberType initialNumberType) {
+        super(name, value);
+        this.uuidBaseFrequency = uuidBaseFrequency;
+        this.initialNumberType = initialNumberType;
+    }
+
     public HzPpmNumberValue(Node node) {
         super(node);
         this.uuidBaseFrequency = DOM.getTextContent(node, "uuidBaseFrequency");

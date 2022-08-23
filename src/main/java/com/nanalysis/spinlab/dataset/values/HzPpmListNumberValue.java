@@ -20,6 +20,8 @@ import com.nanalysis.spinlab.dataset.util.DOM;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.util.List;
+
 public class HzPpmListNumberValue extends ListNumberValue {
     public static final String XSI_TYPE = "hzPpmListNumberParam";
 
@@ -35,6 +37,12 @@ public class HzPpmListNumberValue extends ListNumberValue {
 
     public HzPpmListNumberValue() {
         // empty
+    }
+
+    public HzPpmListNumberValue(String name, List<Number> value, String uuidBaseFrequency, NumberType initialNumberType) {
+        super(name, value);
+        this.uuidBaseFrequency = uuidBaseFrequency;
+        this.initialNumberType = initialNumberType;
     }
 
     public HzPpmListNumberValue(Node node) {

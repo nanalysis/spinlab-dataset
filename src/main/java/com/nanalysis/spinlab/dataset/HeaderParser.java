@@ -43,12 +43,12 @@ public class HeaderParser {
         Header header = new Header();
 
         getValuesFromMapNode(DOM.findUniqueChild(node, "params"))
-                .forEach(header::add);
+                .forEach(header::put);
 
-        DOM.findOptionalChild(node, "variationParams1D").ifPresent(child -> getValuesFromMapNode(child).forEach(v -> header.addVariation(v, 1)));
-        DOM.findOptionalChild(node, "variationParams2D").ifPresent(child -> getValuesFromMapNode(child).forEach(v -> header.addVariation(v, 2)));
-        DOM.findOptionalChild(node, "variationParams3D").ifPresent(child -> getValuesFromMapNode(child).forEach(v -> header.addVariation(v, 3)));
-        DOM.findOptionalChild(node, "variationParams4D").ifPresent(child -> getValuesFromMapNode(child).forEach(v -> header.addVariation(v, 4)));
+        DOM.findOptionalChild(node, "variationParams1D").ifPresent(child -> getValuesFromMapNode(child).forEach(v -> header.putVariation(v, 1)));
+        DOM.findOptionalChild(node, "variationParams2D").ifPresent(child -> getValuesFromMapNode(child).forEach(v -> header.putVariation(v, 2)));
+        DOM.findOptionalChild(node, "variationParams3D").ifPresent(child -> getValuesFromMapNode(child).forEach(v -> header.putVariation(v, 3)));
+        DOM.findOptionalChild(node, "variationParams4D").ifPresent(child -> getValuesFromMapNode(child).forEach(v -> header.putVariation(v, 4)));
 
         return header;
     }

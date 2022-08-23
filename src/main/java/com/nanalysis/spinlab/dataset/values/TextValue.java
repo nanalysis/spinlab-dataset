@@ -39,6 +39,10 @@ public class TextValue extends Value<String> {
         // empty
     }
 
+    public TextValue(String name, String value) {
+        super(name, value);
+    }
+
     public TextValue(Node node) {
         super(node);
         this.value = DOM.getTextContent(node, "value");
