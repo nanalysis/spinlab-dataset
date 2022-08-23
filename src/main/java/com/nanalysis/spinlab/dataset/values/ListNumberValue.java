@@ -17,6 +17,7 @@ package com.nanalysis.spinlab.dataset.values;
 
 import com.nanalysis.spinlab.dataset.enums.Order;
 import com.nanalysis.spinlab.dataset.util.DOM;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.List;
@@ -35,6 +36,15 @@ public class ListNumberValue extends NumericValue<List<Number>> {
         this.value = DOM.getListNumberContent(node, "value", getNumberClass());
         this.defaultValue = DOM.getListNumberContent(node, "defaultValue", getNumberClass());
         this.order = DOM.getEnumContent(node, "order", Order.class, Order.Unknown);
+    }
+
+    @Override
+    public void toDOM(Element parent) {
+        super.toDOM(parent);
+        parent.setAttribute("xsi:type", XSI_TYPE);
+        DOM.addNumberElements(parent, "value", value);
+        DOM.addNumberElements(parent, "defaultValue", defaultValue);
+        DOM.addElement(parent, "order", order);
     }
 
     public Order getOrder() {

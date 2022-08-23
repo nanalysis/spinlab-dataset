@@ -16,7 +16,7 @@
 package com.nanalysis.spinlab.dataset;
 
 import com.nanalysis.spinlab.dataset.util.DOM;
-import com.nanalysis.spinlab.dataset.values.*;
+import com.nanalysis.spinlab.dataset.values.Value;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -71,6 +71,7 @@ public class HeaderWriter {
             Element key = DOM.addElement(entry, "key", value.getName());
             Element element = DOM.addElement(entry, "value");
 
+            element.setAttributeNS(DOM.XMLNS_URI, "xmlns:xsi", DOM.XMLSCHEMA_INSTANCE_URI);
             value.toDOM(element);
 
             //TODO continue, see how to add xsi:type

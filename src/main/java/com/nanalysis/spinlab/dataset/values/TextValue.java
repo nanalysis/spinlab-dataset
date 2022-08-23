@@ -16,6 +16,7 @@
 package com.nanalysis.spinlab.dataset.values;
 
 import com.nanalysis.spinlab.dataset.util.DOM;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
@@ -44,5 +45,15 @@ public class TextValue extends Value<String> {
         this.defaultValue = DOM.getTextContent(node, "defaultValue");
         this.suggestedValues = DOM.getListTextContent(node, "suggestedValues");
         this.restrictedToSuggested = DOM.getBooleanContent(node, "restrictedToSuggested");
+    }
+
+    @Override
+    public void toDOM(Element parent) {
+        super.toDOM(parent);
+        parent.setAttribute("xsi:type", XSI_TYPE);
+        DOM.addElement(parent, "value", value);
+        DOM.addElement(parent, "defaultValue", defaultValue);
+        DOM.addTextElements(parent, "suggestedValues", suggestedValues);
+        DOM.addElement(parent, "restrictedToSuggested", restrictedToSuggested);
     }
 }

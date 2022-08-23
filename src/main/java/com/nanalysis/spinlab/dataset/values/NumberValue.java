@@ -18,6 +18,7 @@ package com.nanalysis.spinlab.dataset.values;
 import com.nanalysis.spinlab.dataset.Header;
 import com.nanalysis.spinlab.dataset.enums.Unit;
 import com.nanalysis.spinlab.dataset.util.DOM;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
@@ -46,6 +47,16 @@ public class NumberValue extends NumericValue<Number> {
         this.defaultValue = DOM.getNumberContent(node, "defaultValue", getNumberClass());
         this.suggestedValues = DOM.getListNumberContent(node, "suggestedValues", getNumberClass());
         this.restrictedToSuggested = DOM.getBooleanContent(node, "restrictedToSuggested");
+    }
+
+    @Override
+    public void toDOM(Element parent) {
+        super.toDOM(parent);
+        parent.setAttribute("xsi:type", XSI_TYPE);
+        DOM.addElement(parent, "value", value);
+        DOM.addElement(parent, "defaultValue", defaultValue);
+        DOM.addNumberElements(parent, "suggestedValues", suggestedValues);
+        DOM.addElement(parent, "restrictedToSuggested", restrictedToSuggested);
     }
 
     public double getValueAsHertz(Header header) {

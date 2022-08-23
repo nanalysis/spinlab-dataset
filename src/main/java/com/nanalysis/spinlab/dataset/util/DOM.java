@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class DOM {
+    public static final String XMLNS_URI = "http://www.w3.org/2000/xmlns/";
+    public static final String XMLSCHEMA_INSTANCE_URI = "http://www.w3.org/2001/XMLSchema-instance";
+
     public static List<Node> findChildNodes(Node parent, String tag) {
         List<Node> result = new ArrayList<>();
 
@@ -91,8 +94,12 @@ public class DOM {
         }
     }
 
+    public static String getAttribute(Node node, String attributeName) {
+        return node.getAttributes().getNamedItem(attributeName).getTextContent();
+    }
+
     public static Element addElement(Element parent, String tag) {
-        return addElement(parent, tag, null);
+        return addElement(parent, tag, (String) null);
     }
 
     public static Element addElement(Element parent, String tag, String text) {
@@ -110,10 +117,23 @@ public class DOM {
         return addElement(parent, tag, String.valueOf(value));
     }
 
-        public static String getAttribute(Node node, String attributeName) {
-        return node.getAttributes().getNamedItem(attributeName).getTextContent();
+    public static Element addElement(Element parent, String tag, Enum<?> value) {
+        String text = value != null ? value.name() : null;
+        return addElement(parent, tag, text);
     }
 
+    public static void addElement(Element parent, String tag, Number number) {
+        String text = number != null ? number.toString() : null;
+        addElement(parent, tag, text);
+    }
+
+    public static void addTextElements(Element parent, String tag, List<String> texts) {
+        texts.forEach(text -> addElement(parent, tag, text));
+    }
+
+    public static void addNumberElements(Element parent, String tag, List<Number> numbers) {
+        numbers.forEach(n -> addElement(parent, tag, n));
+    }
 
     private static Number parseNumber(String value, Class<? extends Number> numberClass) {
         // try to parse integers specifically for better precision
