@@ -63,13 +63,13 @@ public class NumberValue extends NumericValue<Number> {
         DOM.addElement(parent, "restrictedToSuggested", restrictedToSuggested);
     }
 
-    public double getValueAsHertz(Header header) {
+    public double getValueAs(Unit desired, Header header) {
         Unit unit = numberType != null ? numberType.getUnit() : null;
-        if (unit == Unit.Hertz) {
+        if (unit == desired) {
             return getValue().doubleValue();
         }
 
-        throw new IllegalStateException("Trying read a Hertz value from unit type " + unit);
+        throw new IllegalStateException("Trying read a " + desired + " value from unit type " + unit);
     }
 
     @Override

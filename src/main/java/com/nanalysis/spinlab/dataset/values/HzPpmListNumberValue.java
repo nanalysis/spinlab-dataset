@@ -15,8 +15,11 @@
  */
 package com.nanalysis.spinlab.dataset.values;
 
+import com.nanalysis.spinlab.dataset.Header;
 import com.nanalysis.spinlab.dataset.enums.NumberType;
+import com.nanalysis.spinlab.dataset.enums.Unit;
 import com.nanalysis.spinlab.dataset.util.DOM;
+import com.nanalysis.spinlab.dataset.util.UnitConversions;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -57,6 +60,18 @@ public class HzPpmListNumberValue extends ListNumberValue {
         parent.setAttribute("xsi:type", XSI_TYPE);
         DOM.addElement(parent, "uuidBaseFrequency", uuidBaseFrequency);
         DOM.addElement(parent, "initialNumberType", initialNumberType);
+    }
+
+    @Override
+    public List<Double> getValueAs(Unit desired, Header header) {
+        Unit unit = numberType != null ? numberType.getUnit() : null;
+        if (desired == Unit.Hertz && unit == Unit.Ppm) {
+            NumberValue baseFreq = header.getFromUUID(uuidBaseFrequency);
+            double freq = baseFreq.getValue().doubleValue();
+            return value.stream().map(ppm -> UnitConversions.ppmToHertz(ppm.doubleValue(), freq)).toList();
+        }
+
+        return super.getValueAs(desired, header);
     }
 
     public String getUuidBaseFrequency() {

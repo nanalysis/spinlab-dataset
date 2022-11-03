@@ -61,15 +61,15 @@ public class HzPpmNumberValue extends NumberValue {
     }
 
     @Override
-    public double getValueAsHertz(Header header) {
+    public double getValueAs(Unit desired, Header header) {
         Unit unit = numberType != null ? numberType.getUnit() : null;
-        if (unit == Unit.Ppm) {
+        if (desired == Unit.Hertz && unit == Unit.Ppm) {
             double ppm = getValue().doubleValue();
             NumberValue baseFreq = header.getFromUUID(uuidBaseFrequency);
             return UnitConversions.ppmToHertz(ppm, baseFreq.getValue().doubleValue());
         }
 
-        return super.getValueAsHertz(header);
+        return super.getValueAs(desired, header);
     }
 
     public String getUuidBaseFrequency() {
