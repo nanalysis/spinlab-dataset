@@ -1,6 +1,7 @@
 package com.nanalysis.spinlab.dataset;
 
 import com.nanalysis.spinlab.dataset.enums.Parameter;
+import com.nanalysis.spinlab.dataset.enums.Unit;
 import com.nanalysis.spinlab.dataset.values.ListNumberValue;
 import com.nanalysis.spinlab.dataset.values.NumberValue;
 import org.junit.Ignore;
@@ -26,7 +27,7 @@ public class ManualTest {
         NumberValue sw = header.get(Parameter.SPECTRAL_WIDTH);
         System.out.println(sw.getNumberEnum());
         System.out.println(sw.getValue());
-        System.out.println(sw.getValueAsHertz(header));
+        System.out.println(sw.getValueAs(Unit.Hertz, header));
 
         ListNumberValue tau = header.get("Tau_2D");
         System.out.println(tau.getValue());

@@ -12,7 +12,7 @@ Header header = new HeaderParser().parse(new FileInputStream("/path/to/header.xm
 NumberValue sw = header.get(Parameter.SPECTRAL_WIDTH); 
 System.out.println(sw.getNumberEnum());
 System.out.println(sw.getValue());
-System.out.println(sw.getValueAsHertz(header)); // handles hz conversion from ppm if needed
+System.out.println(sw.getValueAs(Unit.Hertz, header)); // handles hz conversion from ppm if needed
 
 // Access sequence-specific parameters - using String
 ListNumberValue tau = header.get("Tau_2D");

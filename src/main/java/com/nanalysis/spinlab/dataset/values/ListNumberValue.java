@@ -15,7 +15,9 @@
  */
 package com.nanalysis.spinlab.dataset.values;
 
+import com.nanalysis.spinlab.dataset.Header;
 import com.nanalysis.spinlab.dataset.enums.Order;
+import com.nanalysis.spinlab.dataset.enums.Unit;
 import com.nanalysis.spinlab.dataset.util.DOM;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -83,6 +85,15 @@ public class ListNumberValue extends NumericValue<List<Number>> {
     @Override
     public String stringValue() {
         return value.stream().map(String::valueOf).collect(Collectors.joining(";"));
+    }
+
+    public List<Double> getValueAs(Unit desired, Header header) {
+        Unit unit = numberType != null ? numberType.getUnit() : null;
+        if (unit == desired) {
+            return doubleListValue();
+        }
+
+        throw new IllegalStateException("Trying read a " + desired + " value from unit type " + unit);
     }
 
     public Order getOrder() {
