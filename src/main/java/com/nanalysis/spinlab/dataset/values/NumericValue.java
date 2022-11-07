@@ -72,4 +72,20 @@ public abstract class NumericValue<T> extends Value<T> {
     public void setNumberEnum(NumberType numberType) {
         this.numberType = numberType;
     }
+
+    public void setMinValue(Number minValue) {
+        this.minValue = minValue;
+    }
+
+    public Number getMinValue() {
+        return this.minValue;
+    }
+
+    public void setMaxValue(Number maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public Number getMaxValue() {
+        return this.maxValue;
+    }
 }
