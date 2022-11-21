@@ -59,7 +59,7 @@ public class HzPpmListNumberValue extends ListNumberValue {
         super.toDOM(parent);
         parent.setAttribute("xsi:type", XSI_TYPE);
         DOM.addElement(parent, "uuidBaseFrequency", uuidBaseFrequency);
-        DOM.addElement(parent, "initialNumberType", initialNumberType);
+        DOM.addElement(parent, "initialNumberEnum", initialNumberType);
     }
 
     @Override
